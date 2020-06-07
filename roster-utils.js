@@ -1,7 +1,7 @@
 /*
- *	Prints a table in the console of all the classes for the teacher.
+ *	Prints a table in the console of all the classes for the given searchTerm.
  */
-function findClasses(teacher) {
+function findClasses(searchTerm) {
 
 	const myClassesOnlyCheckbox = document.getElementById('my-classes');
 	const numClasses = document.querySelectorAll('.pure-input-1-3 option').length;
@@ -19,7 +19,7 @@ function findClasses(teacher) {
 		const options = Array.from(document.querySelectorAll('.pure-input-1-3 option'));
 	  console.table(
 	  	options
-	  	.filter(option => option.textContent.match(new RegExp(teacher, 'gi')))
+	  	.filter(option => option.textContent.match(new RegExp(searchTerm, 'gi')))
 	  	.map(option => ({ className: option.textContent, classNumber: option.value }))
 	  );
 	}
@@ -30,12 +30,20 @@ function findClasses(teacher) {
 /*
  *	Switches the teach tool to the roster page for the given classNumber.
  * 	You can get the classNumber by using the findClasses helper-function.
+ *	The type corresponds to the fields in the navbar, I usually use this
+ *	for roster or files types.
  */
-function selectClass(classNumber) {
+function selectClass(classNumber, type) {
+	if (!type) {
+		type = window.location.hash.split('/')[0];
+		type = type
+	} else {
+		type = '#' + type;
+	}
 	const options = Array.from(document.querySelectorAll('.pure-input-1-3 option'));
 	const index = options.findIndex(option => option.value == classNumber);
 	
-	window.location = `${window.origin}/teach/#roster/class/${classNumber}`;
+	window.location = `${window.origin}/teach/${type}/class/${classNumber}`;
 	window.location.reload();
 }
 
