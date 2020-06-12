@@ -135,3 +135,34 @@ function getClassCredentials(withScratch = false) {
 }
 
 
+
+/*
+ *	Returns an array of students that have studentName in their usernames. Use
+ *	in combination with selectStudent if you want to easily browse all students
+ *	in the 'Live' tab.
+ */
+function findStudent(studentName) {
+	return Array.from(document.querySelectorAll('li i'))
+		.map(el => el.nextSibling.textContent)
+		.filter(student => student.includes(studentName));
+}
+
+/*
+ *	Utility function used by selectStudent, you shouldn't need it.
+ */
+function findStudentElement(studentName) {
+	return Array.from(document.querySelectorAll('li i'))
+		.find(studentEl => studentEl.nextSibling.textContent.includes(studentName));
+}
+
+/*
+ *	Has the same effect as clicking on the student's name in the 'Live' tab.
+ *	Will select the student and populate their 'Show Files' area.
+ */
+function selectStudent(studentName) {
+	const student = findStudentElement(studentName.trim());
+	student.click();
+	setTimeout(() => {
+		Array.from(document.querySelectorAll('.pure-button.pure-button-primary')).filter(button => button.textContent == 'Show Files')[0].click();
+	}, 1000);
+}
