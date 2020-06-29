@@ -166,3 +166,14 @@ function selectStudent(studentName) {
 		Array.from(document.querySelectorAll('.pure-button.pure-button-primary')).filter(button => button.textContent == 'Show Files')[0].click();
 	}, 1000);
 }
+
+
+/*
+ *	Give the 'Code' section on the 'Live' tab a little more breathing room.
+ */
+function adjustLiveTabStyles() {
+	document.querySelector('.main-container').setAttribute('style', 'max-width: 100% !important');
+	document.querySelectorAll('.col-2').forEach(el => el.setAttribute('style', 'flex: 0 0 14.666667%'));
+	document.querySelector('.col-5').setAttribute('style', 'max-width: 52.6666666667%; flex: 0 0 52.6666666667%;');
+	document.querySelector('.body-2.live-col.ps').setAttribute('style', 'height: 75vh;');
+}
