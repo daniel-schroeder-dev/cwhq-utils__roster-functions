@@ -59,8 +59,6 @@ function selectClass(classNumber, type) {
 	} else {
 		type = '#' + type;
 	}
-	const options = Array.from(document.querySelectorAll('.pure-input-1-3 option'));
-	const index = options.findIndex(option => option.value == classNumber);
 	
 	window.location = `${window.origin}/teach/${type}/class/${classNumber}`;
 	window.location.reload();
