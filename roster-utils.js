@@ -1,26 +1,45 @@
+
+const scrollClassList = () => new Promise((resolve, reject) => {
+	const selectClassIcon = document.querySelector('.v-input__slot');
+
+	selectClassIcon.click();
+	selectClassIcon.click();
+
+	setTimeout(() => {
+		const start = Date.now();
+		const scrollDiv = document.querySelector('.v-menu__content.menuable__content__active.v-autocomplete__content');
+		const scroll = () => scrollDiv.scrollTop += 200;
+		const scrollInterval = setInterval(() => {
+			if (Date.now() - start > 2000) {
+				console.log('clearing scrollInterval');
+				clearInterval(scrollInterval);
+				return resolve();
+			}
+			scroll();
+		}, 10);
+	}, 500);
+});
+
 /*
  *	Prints a table in the console of all the classes for the given searchTerm.
  */
 function findClasses(searchTerm) {
 
-	const myClassesOnlyCheckbox = document.getElementById('my-classes');
-	const numClasses = document.querySelectorAll('.pure-input-1-3 option').length;
+	const myClassesOnlyCheckbox = document.querySelector('input[type="checkbox"]');
 
-	if (numClasses < 40) {
-		myClassesOnlyCheckbox.click();
-		setTimeout(() => {
-			buildTable();
-		}, 1000);
-	} else {
+	myClassesOnlyCheckbox.click();
+
+	scrollClassList().then(() => {
 		buildTable();
-	}
+	});
 
 	function buildTable() {
-		const options = Array.from(document.querySelectorAll('.pure-input-1-3 option'));
+		const regExp = /\(([^)]+)\)/;
+		const courses = Array.from(document.querySelectorAll('.v-list-item__title'));
 	  console.table(
-	  	options
-	  	.filter(option => option.textContent.match(new RegExp(searchTerm, 'gi')))
-	  	.map(option => ({ className: option.textContent, classNumber: option.value }))
+	  	courses
+	  	.filter(course => course.textContent.match(new RegExp(searchTerm, 'gi')))
+	  	.map(course => ({ className: course.textContent, classNumber: regExp.exec(course.textContent)[1] }))
 	  );
 	}
 
