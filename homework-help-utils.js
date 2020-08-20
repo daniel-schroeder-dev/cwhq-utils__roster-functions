@@ -23,14 +23,6 @@
         console.table(studentList);
         return studentList;
     }
-    unsafeWindow.sortStudents = (name) => {
-        if (!unsafeWindow.learn.model._students) unsafeWindow.learn.model._students = unsafeWindow.learn.model.students;
-
-        const sortedStudents = Object.values(unsafeWindow.learn.model._students).filter(e => e.username.match(new RegExp(name, "gi")));
-        unsafeWindow.learn.model.students = sortedStudents;
-        console.table(sortedStudents);
-        return sortedStudents;
-    }
 
     unsafeWindow.createTableFromStudents = (studentList) => {
         let students = studentList.split(/\s/g);
